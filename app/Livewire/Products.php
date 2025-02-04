@@ -12,15 +12,23 @@ class Products extends Component
 
     use WithFileUploads;
     public $products = [];
-    public $carts = [];
+    public $carts;
 
     public $name;
     public $description;
     public $image;
     public $price;
 
+    public $total_cart_price = 0;
+
     public $showAddProductForm = false;
     public $showDashboard = false;
+
+    public $discountNumber = 0;
+
+    public $discountedPrice = 0;
+
+    public $totalCartAmountAfterDiscount;
 
     public function mount()
     {
@@ -35,7 +43,9 @@ class Products extends Component
 
     public function loadCarts()
     {
-        $this->carts = Cart::all();
+        $this->carts = Cart::with('product')->get();
+        $this->calculateCartSum();
+
     }
 
     public function toggleAddProductForm()
@@ -49,6 +59,8 @@ class Products extends Component
     }
 
 
+
+    // Logic for every page.
 
     public function addProduct()
     {
@@ -98,6 +110,38 @@ class Products extends Component
         session()->flash('message', 'Product added to cart successfully!');
     }
 
+    public function calculateCartSum(){
+
+        $this->total_cart_price = $this->carts->sum(function($item){
+            return $item['quantity'] * $item['product']['price'];
+        });
+
+        // dd($this->total_cart_price);
+
+
+        
+
+    }
+
+    public function applyDiscount($val)
+    {
+
+        // dd($this->total_cart_price );
+
+        if ($this->total_cart_price > 0) {
+            $percentage = $this->discountNumber/100;
+            $this->discountedPrice = $this->total_cart_price * $percentage;
+
+        } else {
+            $this->discountedPrice = 0;
+        }
+
+        $this->totalCartAmountAfterDiscount = $this->total_cart_price - $this->discountedPrice;
+
+        
+
+
+    }
 
     public function render()
     {

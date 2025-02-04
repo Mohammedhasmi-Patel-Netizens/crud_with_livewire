@@ -28,11 +28,11 @@
             @foreach ($products as $product)
             <div class="col-md-4 mb-4">
               <div class="card">
-                <img src="http://localhost:8000/storage/{{ $product->image_uri }}" class="card-img-top"
+                <img src="http://crudwithlivewire.test/storage/{{ $product->image_uri }}" class="card-img-top" height="100"
                   alt="{{ $product->name }}">
                 <div class="card-body">
-                  <h5 class="card-title">{{ $product->name }}</h5>
-                  <p class="card-text">{{ $product->description }}</p>
+                  <h6 class="card-title">{{ $product->name }}</h6>
+                  {{-- <p class="card-text">{{ $product->description }}</p> --}}
                   <p class="card-text"><strong>Price: ${{ $product->price }}</strong></p>
                   <a href="#" class="btn btn-primary" wire:click="addToCart({{ $product->id }})">Add to Cart</a>
                 </div>
@@ -65,15 +65,18 @@
                 <td>{{ $cart->product->description }}</td>
                 <td>${{ $cart->product->price }}</td>
                 <td>
-                  <img src="http://localhost:8000/storage/{{ $cart->product->image_uri }}"
+                  <img src="http://crudwithlivewire.test/storage/{{ $cart->product->image_uri }}"
                     alt="{{ $cart->product->name }}" style="width: 50px; height: auto;" />
                 </td>
                 <td>{{ $cart->quantity }}</td>
                 <td>${{ $cart->product->price * $cart->quantity }}</td>
               </tr>
               @endforeach
+              
             </tbody>
           </table>
+          
+          <x-cart-bill totalCartPrice="{{$total_cart_price}}" :discountedPrice="$discountedPrice" :totalCartAmountAfterDiscount="$totalCartAmountAfterDiscount" />
           @else
           <p>Your cart is empty.</p>
           @endif
