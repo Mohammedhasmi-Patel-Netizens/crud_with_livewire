@@ -22,7 +22,7 @@
             <input type="number" class="form-control" id="price" wire:model="price" step="0.01" required>
         </div>
 
-        <button type="submit" class="btn btn-success">Add Product</button>
+        <button type="submit" class="btn btn-success">Update Product</button>
     </form>
 
     @if (session()->has('message'))

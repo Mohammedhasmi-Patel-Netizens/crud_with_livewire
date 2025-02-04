@@ -125,6 +125,8 @@ class Products extends Component
 
         // dd($this->total_cart_price );
 
+        dd($this->discountNumber);
+
         if ($this->total_cart_price > 0) {
             $percentage = $this->discountNumber/100;
             $this->discountedPrice = $this->total_cart_price * $percentage;
@@ -139,6 +141,11 @@ class Products extends Component
 
     public function updateProductById($productid){
         dd($productid);
+
+        $product = Product::find($productid);
+
+        // dd($product);
+        return  view('components.update-product');
     }
 
     public function deleteProductById($productid){
