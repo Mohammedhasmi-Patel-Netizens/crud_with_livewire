@@ -104,6 +104,7 @@ class Products extends Component
         }
 
         $this->loadCarts();
+        $this->applyDiscount();
 
 
         // Optionally, you can emit a success message
@@ -117,13 +118,9 @@ class Products extends Component
         });
 
         // dd($this->total_cart_price);
-
-
-        
-
     }
 
-    public function applyDiscount($val)
+    public function applyDiscount()
     {
 
         // dd($this->total_cart_price );
@@ -138,8 +135,18 @@ class Products extends Component
 
         $this->totalCartAmountAfterDiscount = $this->total_cart_price - $this->discountedPrice;
 
-        
+    }
 
+    public function updateProductById($productid){
+        dd($productid);
+    }
+
+    public function deleteProductById($productid){
+        // dd($productid);
+
+        Product::destroy($productid);
+        // $this->loadProducts();
+        $this->mount();
 
     }
 

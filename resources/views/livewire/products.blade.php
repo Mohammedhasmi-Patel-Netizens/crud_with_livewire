@@ -15,7 +15,7 @@
   </button>
 
   @if($showDashboard)
-      <x-add-product /> 
+      <x-dashboard :products="$products" /> 
   @endif
 
 
